@@ -20,14 +20,10 @@ Additionally, gene sets can be large and messy, often containing thousands of in
 * Gene expression: I used STAR-FPKM pipeline instead of the paper's HTSeq-FPKM (Xena has retired the HTSeq version for this cohort).
 * METABRIC gene expression: I used `data_mrna_illumina_microarray.txt` instead of the paper's `data_mrna_agilent_microarray.txt.gz` (the Agilent file is no longer available in the current METABRIC download).
 * Pathway definitions: current MSigDB release (v2026.1), renamed to match `v7.5.1` filenames, rather than the exact archived v7.5.1 files.
-* I used a single classifier (Logistic Regression) and 100 epochs instead of 1024 like the paper.
 * I used a single train/test split and fixed the architecture. I used 100 epochs instead of the paper's 1024 and did not perform grid search or cross-validated model selection.
 * I focused on reproducing the PAAE model and subtype classification, so I did not implement PAVAE, survival analysis, feature importance/ANPW analysis, or clustering.
 
 ## Results
-TCGA-BRCA test accuracy | 0.853
-METABRIC external-validation accuracy | 0.0843
-METABRIC ROC AUC | 0.7502
 
 Metric  |   Value
 --------|------
@@ -79,7 +75,7 @@ METABRIC external validation
 
 ## Limitations 
 
-The notebook uses a fixed random seed to make the training procedure reproducible. Before fixing the seed, rerunning the notebook produced noticeably different results: TCGA test accuracy stayed around 0.81 to 0.84, but METABRIC accuracy ranged from around 0.08 to 0.33, with prediction sometimes collapsing onto one or two subtypes instead of spreading across all five. ROC AUC was more stable around 0.73 to 0.79. This variability must be related to the reduced epoch count (100 vs the paper's 1024), but that wasn't tested directly. The final results reported above therefore correspond to the fixed-seed run.
+The notebook uses a fixed random seed to make the training procedure reproducible. Before fixing the seed, rerunning the notebook produced noticeably different results: TCGA test accuracy stayed around 0.81 to 0.84, but METABRIC accuracy ranged from around 0.08 to 0.33, with prediction sometimes collapsing onto one or two subtypes instead of spreading across all five. ROC AUC was more stable around 0.73 to 0.79. This variability may be related to the reduced epoch count (100 vs the paper's 1024), but this wasn't tested directly. The final results reported above therefore correspond to the fixed-seed run.
 
 ## Data 
 * TCGA-BRCA: Breast cancer gene-expression and clinical data.
@@ -88,5 +84,10 @@ The notebook uses a fixed random seed to make the training procedure reproducibl
 * Hallmark: 50 pathway definitions.
 
 ## References
-* Original paper: 
+- Original paper: [IEEE Xplore](https://ieeexplore.ieee.org/document/10822388)
+- Original PAAE GitHub repository: [GitHub](https://github.com/phcavelar/pathwayae)
+- [TCGA-BRCA gene expression data](https://xenabrowser.net/datapages/?cohort=GDC%20TCGA%20Breast%20Cancer%20(BRCA))
+- [TCGA-BRCA clinical data](https://tcga.xenahubs.net/download/TCGA.BRCA.sampleMap/BRCA_clinicalMatrix)
+- [MSigDB](https://www.gsea-msigdb.org/)
+- [METABRIC gene expression data](https://datahub.s3.amazonaws.com/brca_metabric.tar.gz)
 
